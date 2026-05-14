@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Дневник заметок + Алиса{% endblock %}
+{% block content %}
+  <div class="p-4 p-md-5 mb-4 bg-white rounded-3 shadow-sm">
+    <div class="container-fluid py-3">
+      <h1 class="display-6 fw-bold">Дневник заметок и навык Алисы</h1>
+      <p class="col-md-10 fs-5 text-secondary">
+        Веб-приложение с ORM, авторизацией, файлами, REST API и <strong>вебхуком для Яндекс.Алисы</strong>:
+        голосом можно слушать список заметок, диктовать новые и смотреть погоду.
+      </p>
+      <a class="btn btn-primary btn-lg me-2" href="{{ url_for('auth.register') }}">Регистрация</a>
+      <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('auth.login') }}">Вход</a>
+    </div>
+  </div>
+  <div class="row g-3">
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <h2 class="h5">Веб</h2>
+          <p class="text-secondary small">Bootstrap, SQLite, загрузка картинок к заметкам.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <h2 class="h5">REST API</h2>
+          <p class="text-secondary small">Bearer-токен в профиле, JSON для заметок.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <h2 class="h5">Алиса</h2>
+          <p class="text-secondary small">Endpoint <code>POST /alice/webhook</code>, привязка по коду с сайта.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

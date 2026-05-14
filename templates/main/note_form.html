@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} - Дневник + Алиса{% endblock %}
+{% block content %}
+  <h1 class="h3 mb-4">{{ title }}</h1>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.title.label(class="form-label") }}
+          {% set tcls = 'form-control' ~ (' is-invalid' if form.title.errors else '') %}
+          {{ form.title(class=tcls) }}
+          {% for err in form.title.errors %}<div class="invalid-feedback">{{ err }}</div>{% endfor %}
+        </div>
+        <div class="mb-3">
+          {{ form.body.label(class="form-label") }}
+          {{ form.body(class="form-control", rows=8) }}
+          {% for err in form.body.errors %}<div class="invalid-feedback d-block">{{ err }}</div>{% endfor %}
+        </div>
+        <div class="mb-3">
+          {{ form.tags.label(class="form-label") }}
+          {{ form.tags(class="form-control", placeholder="учёба, идеи") }}
+          <div class="form-text">{{ form.tags.description }}</div>
+          {% for err in form.tags.errors %}<div class="text-danger small">{{ err }}</div>{% endfor %}
+        </div>
+        <div class="mb-3">
+          {{ form.image.label(class="form-label") }}
+          {{ form.image(class="form-control") }}
+          {% for err in form.image.errors %}<div class="text-danger small">{{ err }}</div>{% endfor %}
+        </div>
+        {{ form.submit(class="btn btn-primary") }}
+        <a href="{{ url_for('main.note_list') }}" class="btn btn-link">Отмена</a>
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Дашборд - Дневник + Алиса{% endblock %}
+{% block content %}
+  <h1 class="h3 mb-4">Дашборд</h1>
+  <div class="row g-3">
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h2 class="h5">Ваши заметки</h2>
+          <p class="display-6">{{ notes_total }}</p>
+          <a href="{{ url_for('main.note_list') }}" class="btn btn-outline-primary btn-sm">Список</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100 border-warning">
+        <div class="card-body">
+          <h2 class="h5">Алиса</h2>
+          <p class="small text-secondary">Привязка по коду, голосовые команды к вашим заметкам.</p>
+          <a href="{{ url_for('main.alice_panel') }}" class="btn btn-warning btn-sm">Настроить</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h2 class="h5">Погода (Open-Meteo)</h2>
+          {% if weather.error %}
+            <p class="text-danger mb-0">{{ weather.error }}</p>
+          {% else %}
+            <ul class="list-unstyled mb-0">
+              <li><strong>Температура:</strong> {{ weather.temperature }} °C</li>
+              <li><strong>Ветер:</strong> {{ weather.windspeed }} км/ч</li>
+              <li><strong>Условия:</strong> {{ weather_desc }}</li>
+              <li class="text-muted small">Время: {{ weather.time }}</li>
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

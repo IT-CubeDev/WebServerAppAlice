@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Профиль - Дневник + Алиса{% endblock %}
+{% block content %}
+  <h1 class="h3 mb-4">Профиль и REST API</h1>
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <p><strong>Логин:</strong> {{ current_user.username }}</p>
+      <p><strong>Email:</strong> {{ current_user.email }}</p>
+      <p class="mb-0"><a href="{{ url_for('main.alice_panel') }}">Настройка навыка Алисы</a></p>
+    </div>
+  </div>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="h5">Bearer-токен для API</h2>
+      <p class="text-secondary small">
+        Заголовок <code>Authorization: Bearer &lt;токен&gt;</code> для <code>/api/v1/notes</code>.
+      </p>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control font-monospace" readonly value="{{ current_user.api_token }}" id="apiToken">
+        <button class="btn btn-outline-secondary" type="button" id="copyBtn">Копировать</button>
+      </div>
+      <form method="post" onsubmit="return confirm('Старый токен перестанет работать. Продолжить?');">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="action" value="rotate_token">
+        <button type="submit" class="btn btn-warning">Новый токен</button>
+      </form>
+      <hr>
+      <p class="small text-muted mb-0">
+        <code>curl -H "Authorization: Bearer ..." {{ request.url_root }}api/v1/notes</code>
+      </p>
+    </div>
+  </div>
+  <script>
+    document.getElementById('copyBtn')?.addEventListener('click', async () => {
+      const el = document.getElementById('apiToken');
+      try {
+        await navigator.clipboard.writeText(el.value);
+        el.classList.add('border', 'border-success');
+        setTimeout(() => el.classList.remove('border', 'border-success'), 600);
+      } catch (e) {}
+    });
+  </script>
+{% endblock %}

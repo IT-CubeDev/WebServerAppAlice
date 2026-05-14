@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Вход - Дневник + Алиса{% endblock %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h1 class="h4 mb-3">Вход</h1>
+          <form method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+              {{ form.username.label(class="form-label") }}
+              {% set ucls = 'form-control' ~ (' is-invalid' if form.username.errors else '') %}
+              {{ form.username(class=ucls) }}
+              {% for err in form.username.errors %}<div class="invalid-feedback">{{ err }}</div>{% endfor %}
+            </div>
+            <div class="mb-3">
+              {{ form.password.label(class="form-label") }}
+              {% set pcls = 'form-control' ~ (' is-invalid' if form.password.errors else '') %}
+              {{ form.password(class=pcls) }}
+              {% for err in form.password.errors %}<div class="invalid-feedback">{{ err }}</div>{% endfor %}
+            </div>
+            {{ form.submit(class="btn btn-primary") }}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

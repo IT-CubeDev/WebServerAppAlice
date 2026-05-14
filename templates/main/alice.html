@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Алиса - Дневник заметок{% endblock %}
+{% block content %}
+  <h1 class="h3 mb-3">Навык Яндекс.Алисы</h1>
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <h2 class="h5">Шаг 1. Опубликуйте навык</h2>
+      <p class="small text-secondary mb-0">
+        В <a href="https://dialogs.yandex.ru/developer/" target="_blank" rel="noopener">Яндекс Диалоги</a>
+        создайте навык с backend URL вида <code>https://ваш-домен/alice/webhook</code> (нужен HTTPS, для теста подойдёт ngrok).
+        Опционально задайте заголовок проверки <code>X-Alice-Secret</code> и тот же секрет в переменной окружения <code>ALICE_WEBHOOK_SECRET</code>.
+      </p>
+    </div>
+  </div>
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <h2 class="h5">Шаг 2. Привязка аккаунта</h2>
+      {% if linked %}
+        <p class="text-success mb-2">Аккаунт уже привязан к Алисе для этого пользователя сайта.</p>
+      {% endif %}
+      <p class="small">Сгенерируйте код и произнесите в навыке, например: <em>привязать 123456</em>.</p>
+      {% if active_token %}
+        <p class="mb-2">Действующий код истекает в {{ active_token.expires_at.strftime('%H:%M:%S') }} UTC.</p>
+      {% endif %}
+      <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-warning">Сгенерировать новый код</button>
+      </form>
+    </div>
+  </div>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="h5">Голосовые команды</h2>
+      <ul class="small mb-0">
+        <li><strong>Помощь</strong> - список возможностей</li>
+        <li><strong>Список заметок</strong> - последние пять заголовков</li>
+        <li><strong>Запиши …</strong> - быстрая заметка</li>
+        <li><strong>Заметка заголовок | текст</strong> - заметка с разделителем «вертикальная черта»</li>
+        <li><strong>Теги номер тег1, тег2</strong> - добавить теги к заметке по номеру из списка</li>
+        <li><strong>Погода</strong> - через Open-Meteo</li>
+        <li><strong>Выход</strong> - закрыть сессию навыка</li>
+      </ul>
+    </div>
+  </div>
+{% endblock %}
